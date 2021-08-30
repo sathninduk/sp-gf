@@ -2,9 +2,6 @@ var express = require('express');
 var router = express.Router();
 const requestIp = require('request-ip');
 var multer = require('multer');
-var upload = multer({
-  dest: './uploads'
-});
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('../models/user');
@@ -306,7 +303,7 @@ passport.use(new LocalStrategy(function (username, password, done) {
   });
 }));
 
-router.post('/register', ensureAuthenticated, upload.single('profileimage'), function (req, res, next) {
+router.post('/register', ensureAuthenticated, function (req, res, next) {
   var admin_username = req.user.username;
   var username = req.body.username;
   db.collection('users').find({
@@ -338,14 +335,7 @@ router.post('/register', ensureAuthenticated, upload.single('profileimage'), fun
             var password2 = req.body.password2;
             var role = 1;
 
-            if (req.file) {
-              console.log('Uploading File...');
-              var profileimage = req.file.filename;
-            } else {
-              console.log('No File Uploaded...');
-              var profileimage = 'noimage.jpg';
-            }
-
+           
             // Form Validator
             req.checkBody('name', 'Name field is required').notEmpty();
             req.checkBody('username', 'Username field is required').notEmpty();
@@ -366,8 +356,7 @@ router.post('/register', ensureAuthenticated, upload.single('profileimage'), fun
                 verification: password2,
                 username: username,
                 password: password,
-                role: role,
-                profileimage: profileimage
+                role: role
               });
 
               User.createUser(newUser, function (err, user) {

@@ -5,9 +5,6 @@ const requestIp = require('request-ip');
 var LocalStrategy = require('passport-local').Strategy;
 var multer = require('multer');
 var fs = require('fs');
-var upload = multer({
-	dest: './public/uploads'
-});
 var User = require('../models/user');
 var mongoose = require('mongoose');
 var bcrypt = require('bcryptjs');
