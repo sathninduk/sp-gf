@@ -1,0 +1,35 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset="UTF-8")
+    meta(name="MobileOptimized" content="320")
+    meta(name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no")
+    meta(name="robots" content="noindex")
+    title Star Party | Sri Lanka '21
+  body 
+    block content
+      table(border='1')
+        thead 
+          tr 
+            th #{rounds.id} - #{rounds.name}
+      each comp in competitiors
+        table(class="table datatables" border="1")
+          thead 
+            tr 
+              th(colspan='3') #{comp.name}
+            tr
+              th Q#
+              th Answer 
+              th Drive
+          tbody
+            each answer in ans
+                if comp.username == answer.username
+                  if rounds.id == answer.round
+                    tr
+                      td #{answer.question}
+                      td #{answer.answer}
+                      td
+                        if answer.gdrive != ""
+                          a.btn.btn-primary(href=answer.gdrive target="_blank") Gdrive
+                        else
+                          a.btn.btn-danger No-drive

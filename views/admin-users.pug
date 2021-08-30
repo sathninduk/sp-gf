@@ -1,0 +1,44 @@
+extends layout
+
+block content
+  h1 #{title}
+  p 
+    a(href="/") Home
+    |  > 
+    a(href="/admin/users") Users
+  br
+  br
+  table(class="table datatables" id="myTable")
+    thead 
+      tr
+        th ID
+        th Name
+        th Username
+        th Verification 
+        th Actions
+    tbody
+      each val in all
+        if val.role == 'vptiev1oag'
+          tr(style="color: red;")
+            td #{val._id}
+            td #{val.name}
+            td #{val.username}
+            td #{val.verification}
+            td 
+              form(action="/admin/del-user" method="post")
+                input(type="hidden" name="username" value=val.username)
+                button(type="submit" class="btn btn-danger") Remove
+        else 
+          tr
+            td #{val._id}
+            td #{val.name}
+            td #{val.username}
+            td #{val.verification}
+            td 
+              form(action="/admin/del-user" method="post")
+                input(type="hidden" name="username" value=val.username)
+                button(type="submit" class="btn btn-danger") Remove
+      
+  div(class="container" style="padding: 0px 10px 50px 10px;")
+    div(style="text-align: center;") Copyright ©2021 Star Party | Sri Lanka
+      sup ®

@@ -1,0 +1,50 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset="UTF-8")
+    meta(name="MobileOptimized" content="320")
+    meta(name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no")
+    meta(name="robots" content="noindex")
+    title Star Party | Sri Lanka '21
+    link(href='/stylesheets/bootstrap.css' rel='stylesheet')
+    link(rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css")
+    link(href='/stylesheets/style.css' rel='stylesheet')
+  body
+    .navbar.navbar-default(role='navigation')
+      .container
+        .navbar-header
+          button.navbar-toggle(type='button' data-toggle='collapse' data-target='.navbar-collapse')
+            if !user
+              a(href='/users/login')
+                b Login
+            if user
+              a(href='/users/logout')
+                b Logout
+          a.navbar-brand(href='/')
+            b Star Party | Sri Lanka '21
+        .navbar-collapse.collapse
+          ul.nav.navbar-nav.navbar-right
+            if !user
+              li(class=(title == 'Login' ? 'active' : ''))
+                a(href='/users/login')
+                  b Login
+            if user
+              li.active(class=(title == 'User' ? 'active' : ''))
+                a(href='/')
+                  b #{user.username}
+              li
+                a(href='/users/logout')
+                  b Logout
+    .container
+      != messages()
+      block content
+    
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js')
+    script(src='https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js')
+    script(src='/javascripts/bootstrap.js')
+    script(src='/javascripts/script.js')
+
+    script.
+      $(document).ready( function () {
+      $('#myTable').DataTable();
+      });

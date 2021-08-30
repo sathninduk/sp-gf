@@ -1,0 +1,39 @@
+extends layout
+
+block content
+  h1 #{title}
+  p 
+    a(href="/") Home
+    |  > 
+    a(href="/admin/q-rounds") Rounds
+    |  > 
+    a(href="/admin/questions?round_id="+round_id) Questions
+
+  form(action="/admin/add-questions" method="get")
+    input(type="hidden" name="round_id" value=round_id)
+    button(type="submit" class="btn btn-primary" style="margin: 30px 0px 50px 0px; float: right;") + Add New Question
+  table(class="table datatables" id="myTable")
+    thead 
+      tr
+        th(style="text-align: center;") ID
+        th(style="text-align: center;") Question 
+        th(style="text-align: center;") Media File 
+        th(style="text-align: center;") Duration (Sec) 
+        th(style="text-align: center;") Actions
+    tbody
+      each val in q
+        tr
+          td(style="text-align: center;") #{val.id} 
+          td #{val.question} 
+          td(style="text-align: center;") 
+            a.btn.btn-primary(href='/uploads/' + val.profileimage, target="_blank") View
+          td(style="text-align: center;")  #{val.duration} 
+          td(style="text-align: center;")  
+            form(action="/admin/q-remove" method="post") 
+              input(type="hidden" value=val.id name="id")
+              input(type="hidden" value=round_id name="round")
+              button(class="btn btn-danger" type="submit") Remove
+      
+  div(class="container" style="padding: 0px 10px 50px 10px;")
+    div(style="text-align: center;") Copyright ©2021 Star Party | Sri Lanka
+      sup ®

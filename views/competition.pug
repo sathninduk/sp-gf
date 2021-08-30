@@ -1,0 +1,178 @@
+extends layout
+block content
+  div.con-mid.timebar(id="timebar", style="visibility: hidden;")
+    div.time(id="time", style="visibility: hidden;")
+      p(id='demo_2') Loading...
+  div.con-mid(style="width: 100%;")
+    img(src="/img/sp-b.png" style="width: 220px;")
+  h1.head-round
+    b Round: #{rounddata.id} - #{rounddata.name}
+  p(style="text-align: center; font-size: 11px; color: rgba(0,0,0,.5);")
+    span(style="color:#000;")
+      b Start: 
+    |#{rounddata.start}
+    br
+    span(style="color:#000;")
+      b End: 
+    |#{rounddata.end}
+
+  p.time-slot(id='demo' style="text-align: center;") Loading...
+
+  p.nav-path 
+    a(href="/") Home
+    |  > 
+    a(href="/competition?round="+rounddata.id) #{rounddata.name}
+
+  div(class="container" style="margin: 50px 0px;")
+    each q in qdata
+      div.question 
+        p 
+          b Question - #{q.id}
+        hr(style="border-color:rgba(0,0,0,.2); margin-left: -20px; margin-right: -20px;")
+        p #{q.question} 
+        br
+        if q.mime == "vid"
+          div(style="width: 100%;" class="con-mid media") 
+            video(controls muted controlsList="nodownload noremoteplayback" autostart="false" disablePictureInPicture width="400")
+              source(src="/uploads/"+q.profileimage type="video/mp4")
+              | Your browser does not support HTML video.
+            br
+            br
+
+        else if q.mime == "img"
+          div(style="width: 100%;" class="con-mid media") 
+            img(src="/uploads/"+q.profileimage width="400px")
+            br
+            br
+
+        else 
+
+        hr(style="border-color:rgba(0,0,0,.2); margin-left: -20px; margin-right: -20px;")
+
+        div 
+          p Answer (Question - #{q.id}) 
+            span(id="saved"+q.id style="font-size: 11px;")
+          textarea(name="answer" maxlength="1500" oninput="update(this.id); javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); event.target.value = event.target.value.replace(/[^a-zA-Z0-9 +-/*%#><=~!@$&)(_{}:;?\"\'|^]*/g,'');" class="textareas" id=q.id placeholder="Type your answer here")
+          
+            each ans in answer 
+              if ans.question == q.id 
+                | #{ans.answer}
+          button(class="btn btn-primary" onclick="clickSave(" + q.id + ", " + rounddata.id + ")" type="submit") Save
+          if gdrive != ""
+            a(class="btn btn-dark" style="margin-left: 10px;" href=gdrive target="_blank") Upload
+        script.
+          if(document.getElementById('#{q.id}').value == "") {
+            document.getElementById("saved#{q.id}").innerHTML = " &nbsp;Empty";
+            document.getElementById("saved#{q.id}").style.color = "#0d6efd"
+          } else {
+            document.getElementById("saved#{q.id}").innerHTML = " &nbsp;Saved ✓";
+            document.getElementById("saved#{q.id}").style.color = "#13aa52"
+          }
+
+  div(class="container" style="padding: 0px 10px 50px 10px;")
+    div.legal(style="text-align: center;") Copyright ©2021 Star Party | Sri Lanka
+      sup ®
+        br
+      |*A 
+      a(href="https://en.wikipedia.org/wiki/Carbon_neutrality" target="_blank" style="text-decoration: none;")
+        span.carbon-link carbon neutral 
+      |platform
+
+  script.
+    
+    // Set the date we're counting down to
+    var countDownDate = new Date('#{rounddata.end}').getTime();
+
+    // Update the count down every 1 second
+    var x = setInterval(function() {
+
+      // Get today's date and time
+      var now = new Date().getTime();
+
+      // Find the distance between now and the count down date
+      var distance = countDownDate - now;
+
+      // Time calculations for days, hours, minutes and seconds
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      // Output the result in an element with id="demo"
+      document.getElementById("demo").innerHTML = (days * 24 + hours) + "h "
+      + minutes + "m " + seconds + "s ";
+
+        document.getElementById("demo_2").innerHTML = (days * 24 + hours) + "h "
+      + minutes + "m " + seconds + "s ";
+
+      // If the count down is over, write some text 
+      if (distance <= 15000 && distance >= 0) {
+        document.onkeydown = function (e) {
+        return false;
+        }
+        var txtelement = document.getElementsByTagName("textarea");
+        var ind;
+        for (ind = 0; ind < 200; ind++) {
+          txtelement[ind].disabled = "true";
+        }
+      }
+      if (distance < 0) {
+        clearInterval(x);
+        
+        document.getElementById("demo").innerHTML = "TIMEOUT";
+        document.getElementById("demo_2").innerHTML = "TIMEOUT";
+
+        window.location.replace("/");
+        
+      }
+    }, 1000);
+
+    // time bar
+    window.onscroll = function () { navFunction() };
+      function navFunction() {
+        if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+          document.getElementById("timebar").style = "visibility: visible;";
+          document.getElementById("time").style = "visibility: visible;";
+        } else {
+          document.getElementById("timebar").style = "visibility: hidden;";
+          document.getElementById("time").style = "visibility: hidden;";
+        }
+      }
+      
+
+  script.
+    /*function autoSave(ans, q, round) {
+      const xhtml = new XMLHttpRequest();
+      xhtml.onload = function() {
+        //document.getElementById("txtHint").innerHTML = this.responseText;
+      }
+      xhtml.open("GET", "/ans-submit?answer=" + encodeURIComponent(ans) + "&question=" + parseInt(q) + "&round=" + parseInt(round));
+      //xhtml.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+      xhtml.send();
+      return;
+    }
+    */
+
+  script.
+    function clickSave(q2, round2) {
+      console.log("Sent xhttp request");
+      document.getElementById("saved" + q2).innerHTML = " &nbsp;Saving...";
+      document.getElementById("saved" + q2).style.color = "#ffa500";
+      const xhtml = new XMLHttpRequest();
+      var ans2 = document.getElementById(q2).value;
+      xhtml.open("POST", "/ans-submit?answer=" + encodeURIComponent(ans2) + "&question=" + parseInt(q2) + "&round=" + parseInt(round2), true);
+      xhtml.onload = function() {
+        if (xhtml.responseText != " &nbsp;Saved ✓") {
+          location.reload();
+        }
+        document.getElementById("saved" + q2).innerHTML = xhtml.responseText;
+        document.getElementById("saved" + q2).style.color = "#13aa52";
+      }
+      xhtml.send();
+      return;
+    }
+
+    function update(id) {
+      document.getElementById("saved" + id).innerHTML = " &nbsp;Unsaved";
+      document.getElementById("saved" + id).style.color = "#ff0000";
+    }

@@ -1,0 +1,20 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset="UTF-8")
+    meta(name="MobileOptimized" content="320")
+    meta(name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no")
+    meta(name="robots" content="noindex")
+    title Star Party | Sri Lanka '21 - Cyber Security Dashboard
+    link(rel="stylesheet", href="/stylesheets/security.css")
+  body(style="overflow-x: hidden;") 
+    iframe(style="margin: 0px; padding: 0px; width: 100vw; height: 100vh; border-width: 0px;" id="iframe" src="/admin/sec-i")
+
+script.
+  window.setInterval(function() {
+  reloadIFrame()
+  }, 3000);
+
+  function reloadIFrame() {
+  document.getElementById('iframe').contentWindow.location.reload();
+  }

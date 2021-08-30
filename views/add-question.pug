@@ -1,0 +1,35 @@
+extends layout
+
+block content
+ h2 Add new question: Round - #{round_id}
+ p 
+  a(href="/") Home
+  |  > 
+  a(href="/admin/q-rounds") Rounds
+  |  > 
+  a(href="/admin/questions?round_id="+round_id) Questions
+  |  > 
+  a(href="/admin/add-questions?round_id="+round_id) Add Question
+ br
+ if errors
+  each error, i in errors
+   div.alert.alert-danger #{error.msg}
+ form(action='/admin/add-question-submit' method='post' enctype='multipart/form-data')
+  .form-group
+   label Round Name
+   input.form-control(name='round_id', type='hidden', value=round_id)
+   input.form-control(disabled name='round_name', type='text', value=round_name, placeholder=round_name)
+  .form-group
+   label Index
+   input.form-control(required name='id', type='number', placeholder='Enter ID', value=q_rec)
+   input.form-control(required name='duration', type='hidden', value="0" placeholder='Enter Duration (Seconds)')
+  .form-group
+   label Video/Image
+   input.form-control(name='profileimage', type='file')
+  .form-group
+   label Question
+   textarea.form-control(required name='question', placeholder='Enter the Question', style="width: 100%; height: 200px;")
+  button(class="btn btn-primary" type='submit') Save
+  br
+  br
+  br

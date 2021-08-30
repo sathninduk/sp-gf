@@ -1,0 +1,3 @@
+{"_id":{"$oid":"6128c2b62f323a7629338856"},"name":"Academic Committee","verification":"entrophy123","username":"academic","password":"$2a$10$SCs26m2I5JYrwjjaiPeyiOLDYinCWreqIAe3pjvsUM6FlWT0HGtTm","role":"vptiev1oag","__v":0}
+{"_id":{"$oid":"6128c3ba2f323a7629338857"},"name":"Admin","verification":"dusktilldawn","username":"admin","password":"$2a$10$hzC7fZI8cwiGk8dK7tvxDeHdX.KYImU6u78.fkFTYAztnqwgYql2u","role":"vptiev1oag","__v":0}
+{"_id":{"$oid":"6128c4972f323a7629338860"},"name":"Sathnindu","verification":"apithamaihodatamakare","username":"sathnindu","password":"$2a$10$Ywb1AEGJ.rNyePtMXct9cefUR6Z25x2Hwrs0j.knIXej846O0Qt6.","role":"vptiev1oag","__v":0}

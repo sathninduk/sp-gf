@@ -1,0 +1,15 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset="UTF-8")
+    meta(name="MobileOptimized" content="320")
+    meta(name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no")
+    meta(name="robots" content="noindex")
+    title Star Party | Sri Lanka '21 - Cyber Security Dashboard
+    link(rel="stylesheet", href="/stylesheets/security.css")
+  body 
+    each val in logs 
+        if val.color == undefined
+            p(style="color: white;") #{val.record}
+        else 
+            p(style="color: " + val.color + ";") #{val.record}

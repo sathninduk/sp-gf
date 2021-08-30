@@ -1,0 +1,32 @@
+extends layout
+
+block content
+ h2 Add new Gdrive Link
+ p 
+  a(href="/") Home
+  |  > 
+  a(href="/admin/gdrive") Gdrive
+  |  > 
+  a(href="/admin/add-gdrive") Add Gdrive Link
+ br
+ if errors
+  each error, i in errors
+   div.alert.alert-danger #{error.msg}
+ form(action='/admin/add-gdrive' method='post')
+  .form-group
+   label Username
+   select.form-control(required name="username")
+    each val in users
+      option(value=val.username) #{val.username}
+  .form-group
+   label Round
+   select.form-control(required name="round")
+    each val in rounds
+      option(value=val.id) #{val.name}
+  .form-group
+   label Google Drive Link
+   input.form-control(required name='link' placeholder='Enter the link')
+  button(class="btn btn-primary" type='submit') Save
+  br
+  br
+  br

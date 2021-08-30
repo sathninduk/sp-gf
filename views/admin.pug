@@ -1,0 +1,59 @@
+extends layout
+
+block content
+  h1(style="font-family: Noto Sans; text-align: center;")
+    b #{user.name}
+  p(style="text-align: center;") 
+    a(href="/") Home
+  div(class="container" style="margin: 50px 0px;")
+    div(class="row") 
+
+      if user.username != "academic"
+        div(class="col-sm-4")
+          div(class="card-body") Admin Section - 1
+            br
+            b User Management
+            br
+            br
+            a(class="btn btn-primary" href="/admin/users" target="_self") Proceed
+
+        div(class="col-sm-4")
+          div(class="card-body") Admin Section - 2
+            br
+            b User Registration
+            br
+            br
+            a(class="btn btn-primary" href="/users/register" target="_self") Proceed
+
+        div(class="col-sm-4")
+          div(class="card-body") Admin Section - 3
+            br
+            b Rounds Management
+            br
+            br
+            a(class="btn btn-primary" href="/admin/rounds" target="_self") Proceed
+      if user.username != "academic"
+        div(class="col-sm-4")
+          div(class="card-body") Admin Section - 4
+            br
+            b Online users
+            br
+            br
+            a(class="btn btn-primary" href="/admin/online" target="_self") Proceed
+      if user.username == "sathnindu"
+        div(class="col-sm-4")
+          div(class="card-body") Admin Section - 5
+            br
+            b Cyber Security
+            br
+            br
+            a(class="btn btn-primary" href="/admin/security-log" target="_blank") Proceed
+      
+  div(class="container" style="padding: 0px 10px 50px 10px;")
+    div.legal(style="text-align: center;") Copyright ©2021 Star Party | Sri Lanka
+      sup ®
+          br
+      |*A 
+      a(href="https://en.wikipedia.org/wiki/Carbon_neutrality" target="_blank" style="text-decoration: none;")
+        span.carbon-link carbon neutral 
+      |platform

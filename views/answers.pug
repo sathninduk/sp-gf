@@ -1,0 +1,41 @@
+extends layout
+
+block content
+  h1 #{title}
+  p 
+    a(href="/") Home
+    |  > 
+    a(href="/admin/answers") Answers
+  br
+  br
+
+  each comp in competitiors
+    h2 #{comp.name}
+    div.question
+      each round in rounds
+        h3 Round: #{round.id} - #{round.name}
+        div.question
+          table(class="table datatables")
+            thead 
+              tr
+                th Q#
+                th Answer 
+                th Drive
+            tbody
+              each answer in ans
+                  if comp.username == answer.username
+                    if round.id == answer.round
+                      tr
+                        td #{answer.question}
+                        td #{answer.answer}
+                        td
+                          if answer.gdrive != ""
+                            a.btn.btn-primary(href=answer.gdrive target="_blank") Gdrive
+                          else
+                            a.btn.btn-danger No-drive
+      
+  div(class="container" style="padding: 0px 10px 50px 10px;")
+    div(style="text-align: center;") Copyright ©2021 Star Party | Sri Lanka
+      sup ®
+
+  

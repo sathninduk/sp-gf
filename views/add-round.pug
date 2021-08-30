@@ -1,0 +1,44 @@
+extends layout
+
+block content
+ h2 #{title}
+ p 
+  a(href="/") Home
+  |  > 
+  a(href="/admin/rounds") Rounds
+  |  > 
+  a(href="/admin/add-round") Add Round
+ br
+ if errors
+  each error, i in errors
+   div.alert.alert-danger #{error.msg}
+ form(method='post', action='/admin/add-round')
+  .form-group
+   label ID
+   input.form-control(name='id', type='number', placeholder='Enter ID')
+  .form-group
+   label Round Name
+   input.form-control(name='name', type='text', placeholder='Enter Name')
+  .form-group
+   label Time Slot - Starting
+   input.form-control(name='start_date', type='date', placeholder='Enter Date')
+   input.form-control(name='start_time', type='time', placeholder='Enter Time')
+  .form-group
+   label Time Slot - Ending
+   input.form-control(name='end_date', type='date', placeholder='Enter Date')
+   input.form-control(name='end_time', type='time', placeholder='Enter Time')
+  .form-group
+   label Google Form Link
+   input.form-control(name='link', required, type='url', placeholder='Enter Link')
+
+  br
+  input.btn.btn-primary(type='submit', name='submit', value='Save', style="width: 120px;")
+
+  div(class="container" style="padding: 20px 10px 50px 10px;")
+    div.legal(style="text-align: center;") Copyright ©2021 Star Party | Sri Lanka
+      sup ®
+          br
+      |*A 
+      a(href="https://en.wikipedia.org/wiki/Carbon_neutrality" target="_blank" style="text-decoration: none;")
+        span.carbon-link carbon neutral 
+      |platform

@@ -1,0 +1,203 @@
+extends layout
+
+block content
+  div.con-mid(style="width: 100%;")
+    img(src="/img/sp-b.png" style="width: 220px;")
+  h1(style="font-family: Noto Sans; text-align: center;")
+    b #{user.name}
+  p(style="text-align: center;") Welcome to the 17th Star Party, Sri Lanka - Competition
+  div(class="container" style="margin: 50px 0px;")
+    div(class="row") 
+
+      each val in rounds
+        div(class="col-sm-4")
+          div(class="card-body") Round - #{val.id} 
+            | (#{val.start.getHours()}:#{("0" + val.start.getMinutes()).slice(-2)}h 
+            | - #{val.end.getHours()}:#{("0" + val.end.getMinutes()).slice(-2)}h)
+            br
+            b #{val.name}
+            br
+            hr(style="border-color: rgb(221, 221, 221); margin-left: -20px; margin-right: -20px;")
+            a(href="/competition?round=" + val.id class="btn btn-warning" id="btn"+val.id target="_blank") Loading...
+            span(id="demo"+val.id class="demotime")
+        script.
+          // timing
+          // Set the date we're counting down to
+          var countDownDate#{val.id} = new Date('#{val.start}').getTime();
+          var countDownDate2#{val.id} = new Date('#{val.end}').getTime();
+
+
+          // Update the count down every 1 second
+          var x#{val.id} = setInterval(function() {
+
+            // Get today's date and time
+            var now = new Date().getTime();
+
+            // Find the distance between now and the count down date
+            var distance = countDownDate#{val.id} - now;
+
+            // Time calculations for days, hours, minutes and seconds
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Output the result in an element with id="demo"
+            //document.getElementById("demo#{val.id}").innerHTML = " &nbsp;" + (days * 24 + hours) + "h " + minutes + "m " + seconds + "s ";
+
+            if (distance >= 0) {
+                var start = new Date('#{val.start}');
+                var end = new Date('#{val.end}');
+                var now = new Date();
+                var btn = document.getElementById("btn#{val.id}");
+
+                if (now >= start && now <= end) {
+                   btn.innerHTML="Proceed"
+                  btn.classList.remove("btn-warning");
+                  btn.classList.remove("btn-danger");
+                  btn.classList.add("btn-primary");
+                } else if (now < start) {
+                  btn.innerHTML="Upcoming"
+                  btn.classList.remove("btn-warning");
+                  btn.classList.add("btn-danger");
+                } else if (now > end) {
+                  btn.innerHTML="Timeout"
+                  btn.classList.remove("btn-warning");
+                  btn.classList.remove("btn-primary");
+                  btn.classList.add("btn-dark");
+                } else {
+                  btn.innerHTML="Error"
+                  btn.classList.remove("btn-primary");
+                  btn.classList.remove("btn-danger");
+                  btn.classList.remove("btn-dark");
+                  btn.classList.add("btn-warning");
+                }
+            }
+            // If the count down is over, write some text 
+            if (distance < 0) {
+              //clearInterval(x#{val.id});
+              //document.getElementById("demo#{val.id}").innerHTML = " &nbsp;ACTIVE";
+
+                var start = new Date('#{val.start}');
+                var end = new Date('#{val.end}');
+                var now = new Date();
+                var btn = document.getElementById("btn#{val.id}");
+
+                if (now >= start && now <= end) {
+                  btn.innerHTML="Proceed"
+                  btn.classList.remove("btn-warning");
+                  btn.classList.remove("btn-danger");
+                  btn.classList.add("btn-primary");
+                } else if (now < start) {
+                  btn.innerHTML="Upcoming"
+                  btn.classList.remove("btn-warning");
+                  btn.classList.add("btn-danger");
+                  document.getElementById("demo#{val.id}").innerHTML = "";
+                } else if (now > end) {
+                  btn.innerHTML="Timeout"
+                  btn.classList.remove("btn-warning");
+                  btn.classList.remove("btn-primary");
+                  btn.classList.add("btn-dark");
+                  document.getElementById("demo#{val.id}").innerHTML = "";
+                } else {
+                  btn.innerHTML="Error"
+                  btn.classList.remove("btn-primary");
+                  btn.classList.remove("btn-danger");
+                  btn.classList.remove("btn-dark");
+                  btn.classList.add("btn-warning");
+                  document.getElementById("demo#{val.id}").innerHTML = "";
+                }
+
+              // active countdown
+              // Update the count down every 1 second
+              var y#{val.id} = setInterval(function() {
+
+              // Get today's date and time
+              var now = new Date().getTime();
+
+              // Find the distance between now and the count down date
+              var distance = countDownDate2#{val.id} - now;
+
+              // Time calculations for days, hours, minutes and seconds
+              var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+              var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+              var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+              var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+              // Output the result in an element with id="demo"
+              //document.getElementById("demo#{val.id}").innerHTML = " &nbsp;" + (days * 24 + hours) + "h " + minutes + "m " + seconds + "s ";
+
+              // If the count down is over, write some text 
+              // 992 , 768
+
+              if (distance >= 0) {
+                document.getElementById("demo#{val.id}").innerHTML = " &nbsp;" + (days * 24 + hours) + "h " + minutes + "m " + seconds + "s ";
+                document.getElementById("demo#{val.id}").style.float="right"
+                document.getElementById("demo#{val.id}").style.border="1px solid #0d6efd"
+                document.getElementById("demo#{val.id}").style.color="#0d6efd"
+                document.getElementById("demo#{val.id}").style.padding="3px 6px"
+                document.getElementById("demo#{val.id}").style.borderRadius="5px"
+                document.getElementById("demo#{val.id}").style.marginTop="3px"
+              }
+
+              if (distance < 0) {
+                var start = new Date('#{val.start}');
+                var end = new Date('#{val.end}');
+                var now = new Date();
+                var btn = document.getElementById("btn#{val.id}");
+
+                if (now >= start && now <= end) {
+                  btn.innerHTML="Proceed"
+                  btn.classList.remove("btn-danger");
+                  btn.classList.add("btn-primary");
+                  //document.getElementById("demo#{val.id}").innerHTML = " &nbsp;" + (days * 24 + hours) + "h " + minutes + "m " + seconds + "s ";
+                } else if (now < start) {
+                  btn.innerHTML="Upcoming"
+                  btn.classList.add("btn-danger");
+                  document.getElementById("demo#{val.id}").innerHTML = "";
+                } else if (now > end) {
+                  btn.innerHTML="Timeout"
+                  btn.classList.remove("btn-primary");
+                  btn.classList.add("btn-dark");
+                  document.getElementById("demo#{val.id}").innerHTML = "";
+                } else {
+                  btn.innerHTML="Error"
+                  btn.classList.remove("btn-primary");
+                  btn.classList.remove("btn-danger");
+                  btn.classList.remove("btn-dark");
+                  btn.classList.add("btn-warning");
+                  document.getElementById("demo#{val.id}").innerHTML = "";
+                }
+              }
+            }, 1000);
+
+
+
+
+
+            }
+          }, 1000);
+
+
+
+
+
+
+
+
+
+
+          // btn
+          //document.getElementById("btn#{val.id}").innerHTML = "test"
+
+
+
+
+  div(class="container" style="padding: 0px 10px 50px 10px;")
+    div.legal(style="text-align: center;") Copyright ©2021 Star Party | Sri Lanka
+      sup ®
+        br
+      |*A 
+      a(href="https://en.wikipedia.org/wiki/Carbon_neutrality" target="_blank" style="text-decoration: none;")
+        span.carbon-link carbon neutral 
+      |platform

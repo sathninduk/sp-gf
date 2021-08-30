@@ -1,0 +1,14 @@
+@font-face {
+    font-family: 'Menlo Regular';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Menlo Regular'), url('../fonts/Menlo-Regular.woff') format('woff');
+}
+
+body {
+    color: #fff;
+    background-color: #1e1e1e;
+    font-family: 'Menlo Regular';
+    font-size: 11px;
+    line-height: 3px;
+}

@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  div.con-mid(style="width: 100%;")
+    img(src="/img/sp-b.png" style="width: 220px;")
+  h1(style="font-family: Noto Sans; text-align: center;")
+    b #{user.name}
+  p(style="text-align: center;") Welcome to the 17th Star Party, Sri Lanka - Competition
+  div(class="container" style="margin: 20px 0px;")
+
+  div.con-mid(style="width: 100%; margin-bottom: 60px;")
+    a.btn.btn-danger(onclick="closeWindow()") Close Tab
+
+
+
+
+  div(class="container" style="padding: 0px 10px 50px 10px;")
+    div.legal(style="text-align: center;") Copyright ©2021 Star Party | Sri Lanka
+      sup ®
+        br
+      |*A 
+      a(href="https://en.wikipedia.org/wiki/Carbon_neutrality" target="_blank" style="text-decoration: none;")
+        span.carbon-link carbon neutral 
+      |platform
+
+  script.
+    function closeWindow() {
+      window.close();
+    }

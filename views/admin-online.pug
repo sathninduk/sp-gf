@@ -1,0 +1,44 @@
+extends layout
+
+block content
+  h1 #{title}
+  p 
+    a(href="/") Home
+    |  > 
+    a(href="/admin/online") Online
+  br
+  br
+  table(class="table datatables" id="myTable")
+    thead 
+      tr
+        th Username
+        th Time
+        th IP 
+        th Sockets
+        th Actions
+    tbody
+      each val in all
+        if val.role == 'vptiev1oag'
+          tr(style="color: red;")
+            td #{val.username}
+            td #{val.time}
+            td #{val.ip}
+            td(style="text-align: center;") #{val.sockets}
+            td(style="text-align: center;") 
+              form(action="/admin/online-logout" method="post")
+                input(type="hidden" name="username" value=val.username)
+                button(type="submit" class="btn btn-danger") Logout
+        else 
+          tr
+            td #{val.username}
+            td #{val.time}
+            td #{val.ip}
+            td(style="text-align: center;") #{val.sockets}
+            td(style="text-align: center;") 
+              form(action="/admin/online-logout" method="post")
+                input(type="hidden" name="username" value=val.username)
+                button(type="submit" class="btn btn-danger") Logout
+      
+  div(class="container" style="padding: 0px 10px 50px 10px;")
+    div(style="text-align: center;") Copyright ©2021 Star Party | Sri Lanka
+      sup ®

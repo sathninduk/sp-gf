@@ -1,0 +1,27 @@
+extends layout
+
+block content
+ h1 #{title}
+ p 
+  a(href="/") Home
+  |  > 
+  a(href="/users/register") Register
+ br
+ if errors
+  each error, i in errors
+   div.alert.alert-danger #{error.msg}
+ form(method='post', action='/users/register',enctype='multipart/form-data')
+  .form-group
+   label Name
+   input.form-control(name='name', type='text', placeholder='Enter Name')
+  .form-group
+   label Username
+   input.form-control(name='username', type='text', placeholder='Enter Username')
+  .form-group
+   label Verification Code
+   input.form-control(name='password', type='text', placeholder='Enter Password')
+  .form-group
+   label Confirm Verification Code
+   input.form-control(name='password2', type='text', placeholder='Confirm Password')
+
+  input.btn.btn-primary(type='submit', name='submit',value='Register')

@@ -1,0 +1,28 @@
+extends layout
+
+block content
+  h1 #{title}
+  p 
+    a(href="/") Home
+    |  > 
+    a(href="/admin/q-rounds") Rounds
+
+  div(class="container" style="margin: 50px 0px;")
+    div(class="row") 
+
+      each val in rounds
+        div(class="col-sm-4")
+          div(class="card-body") Round - #{val.id} 
+            | (#{val.start.getHours()}:#{("0" + val.start.getMinutes()).slice(-2)}h 
+            | - #{val.end.getHours()}:#{("0" + val.end.getMinutes()).slice(-2)}h)
+            br
+            b #{val.name}
+            br
+            br
+            form(action="/admin/questions" method="get")
+              input(type="hidden" value=val.id name="round_id")
+              button(class="btn btn-primary" type="submit") Proceed
+      
+  div(class="container" style="padding: 0px 10px 50px 10px;")
+    div(style="text-align: center;") Copyright ©2021 Star Party | Sri Lanka
+      sup ®

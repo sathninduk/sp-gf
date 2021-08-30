@@ -1,0 +1,17 @@
+extends layout
+
+block content
+    h1(style="font-family: Noto Sans; text-align: center;") #{title}
+
+    form(action="https://www.googleapis.com/upload/drive/v3/files?uploadType=media" method="POST" enctype='multipart/form-data')
+        div.form-group.con-mid(style="width: 100%; margin: 120px 0px;")
+            input.form-control(type="file" style="text-align: center; width: 280px; padding-top: 15px;")
+            button.btn.btn-primary(type="submit" style="margin-top: 20px;") Upload
+
+    div(style="width: 100%; text-align: center;")
+        p(style="font-size: 11px; color: rgba(0,0,0,.3); margin-top: 12px;") ©Star Party | Sri Lanka '21 - Cyberspace
+            br
+            |*A 
+            a(href="https://en.wikipedia.org/wiki/Carbon_neutrality" target="_blank" style="text-decoration: none;")
+                span.carbon-link carbon neutral 
+            |platform
