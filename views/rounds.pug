@@ -15,7 +15,7 @@ block content
         th Name
         th Start
         th End 
-        th URL
+        th Google Form URL
         th Actions
     tbody
       each val in rounds
@@ -24,7 +24,8 @@ block content
           td #{val.name}
           td #{val.start}
           td #{val.end}
-          td #{val.link}
+          td 
+            a(href=val.link target="_blank") #{val.link}
           td 
             form(action="/admin/del-round" method="post") 
               input(type="hidden" value=val.id name="id") 
