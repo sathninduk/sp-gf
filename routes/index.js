@@ -72,6 +72,28 @@ router.get('/upload', ensureAuthenticated, function (req, res, next) {
 	});
 });
 
+/* GET user home page. */
+router.get('/msg', ensureAuthenticated, function (req, res, next) {
+	var username = req.user.username;
+	db.collection('users').find({
+		username: username
+	}).toArray((err, results) => {
+		if (err) {
+			console.log(err);
+		} else {
+			users = results[0];
+			if (users.role == "vptiev1oag") {
+				return res.redirect("/admin");
+			} else {
+
+				// page render
+				res.render('msg');
+
+			}
+		}
+	});
+});
+
 // competition
 router.get('/competition', ensureAuthenticated, function (req, res, next) {
 	var round = req.query.round;
@@ -124,104 +146,41 @@ router.get('/competition', ensureAuthenticated, function (req, res, next) {
 
 
 				// gdrive data
+
 				//round data
-				db.collection('gdrive').find({
-					username: req.user.username,
-					round: round
-				}).limit(1).toArray((err3, results28) => {
+				db.collection('rounds').find({
+					id: round
+				}).limit(1).toArray((err3, results2) => {
 					if (err3) {
 						console.log(err3);
 					} else {
 
-						var gdrive = results28[0];
+						var rounddata = results2[0];
 
-						//round data
-						db.collection('rounds').find({
-							id: round
-						}).limit(1).toArray((err3, results2) => {
-							if (err3) {
-								console.log(err3);
-							} else {
+						var start = results2[0].start;
+						var end = results2[0].end;
+						var link = results2[0].link;
+						var currentTime = new Date();
 
-								var rounddata = results2[0];
-
-								var start = results2[0].start;
-								var end = results2[0].end;
-								var currentTime = new Date();
-
-								if (start <= currentTime && currentTime <= end) {
-
-									// question data
-									db.collection('questions').find({
-										round: round
-									}).sort({
-										id: 1
-									}).toArray((err4, results3) => {
-										if (err4) {
-											console.log(err4);
-										} else {
-
-											var qdata = results3;
+						if (start <= currentTime && currentTime <= end) {
 
 
-
-											db.collection('answers').find({
-												username: req.user.username,
-												round: parseInt(round)
-											}).toArray((err7, results6) => {
-												if (err7) {
-													console.log(err7);
-												} else {
-
-													var answer = results6;
-													console.log(results6);
+							res.location(link);
+							res.redirect(link);
 
 
-													db.collection('gdrive').find({
-														username: username,
-														round: round
-													}).count().then((count) => {
-														if (count == 0) {
-															var link = "";
-														} else {
-															var link = gdrive.link;
-														}
-
-														res.render('competition', {
-															round: parseInt(round),
-															rounddata: rounddata,
-															qdata: qdata,
-															answer: answer,
-															gdrive: link
-														});
-
-													});
-												}
-											});
-
-										}
-									});
-								} else if (start > currentTime) {
-									req.flash('error', 'The Round has not started yet');
-									res.location('/');
-									res.redirect('/');
-								} else {
-									req.flash('error', 'Submission Timeout');
-									res.location('/');
-									res.redirect('/');
-								}
-
-							}
-						});
+						} else if (start > currentTime) {
+							req.flash('error', 'The Round has not started yet');
+							res.location('/msg');
+							res.redirect('/msg');
+						} else {
+							req.flash('error', 'Submission Timeout');
+							res.location('/msg');
+							res.redirect('/msg');
+						}
 
 					}
 				});
-
-
-
-
-
-
 
 
 
@@ -232,95 +191,6 @@ router.get('/competition', ensureAuthenticated, function (req, res, next) {
 	}
 });
 
-
-// answers - get
-/*router.get('/ans-submit', ensureAuthenticated, function (req, res, next) {
-
-	var username = req.user.username;
-	var round = parseInt(req.query.round);
-	var question = parseInt(req.query.question);
-	var answer = req.query.answer;
-
-	db.collection('rounds').find({
-		id: round
-	}).toArray((err17, results15) => {
-		if (err17) {
-			console.log(err17);
-		} else {
-
-			var start = results15[0].start;
-			var end = results15[0].end;
-			var currentTime = new Date();
-
-			if (start <= currentTime && currentTime <= end) {
-
-
-
-				db.collection('answers').find({
-					username: username,
-					round: round,
-					question: question
-				}).count().then((count) => {
-
-					if (count == 0) {
-
-						// db insert
-						var ansobj = {
-							username: username,
-							round: parseInt(round),
-							question: parseInt(question),
-							answer: answer
-						};
-
-						db.collection('answers').insertOne(ansobj, function (err2) {
-							if (err2) {
-								res.send(" &nbsp;Error");
-							} else {
-								res.send(" &nbsp;Saved ✓");
-								//console.log("R: " + round + ", Q: " + question + ", USER: " + username + " - Answer Added to the Database Successfully");
-								//req.flash('success', 'Answer added successfully');
-								//res.location('/competition?round=' + round);
-								//res.redirect('/competition?round=' + round);
-							}
-						});
-
-					} else if (count > 0) {
-
-						var updatequery = {
-							username: username,
-							round: parseInt(round),
-							question: parseInt(question)
-						};
-						var newvalues = {
-							$set: {
-								answer: answer
-							}
-						};
-						db.collection("answers").updateOne(updatequery, newvalues, function (err5) {
-							if (err5) {
-								throw err5;
-							} else {
-								res.send(" &nbsp;Saved ✓");
-								//console.log("R: " + round + ", Q: " + question + ", USER: " + username + " - Answer Added to the Database Successfully");
-								//req.flash('success', 'Answer added successfully');
-								//res.location('/competition?round=' + round);
-								//res.redirect('/competition?round=' + round);
-							}
-						});
-					}
-				});
-			} else if (start > currentTime) {
-				req.flash('error', 'The Round has not started yet');
-				res.location('/');
-				res.redirect('/');
-			} else {
-				req.flash('error', 'Submission Timeout');
-				res.location('/');
-				res.redirect('/');
-			}
-		}
-	});
-});*/
 
 // answers - post
 router.post('/ans-submit', ensureAuthenticated, function (req, res, next) {
@@ -390,7 +260,7 @@ router.post('/ans-submit', ensureAuthenticated, function (req, res, next) {
 
 
 								db.collection('gdrive').find({
-									username: username, 
+									username: username,
 									round: round
 								}).limit(1).toArray((err, results123) => {
 									if (err) {
