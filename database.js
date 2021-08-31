@@ -1,20 +1,4 @@
 var mongoose = require('mongoose');
-/*
-mongoose.connect('mongodb+srv://sathnindu:wow123@cluster0.3uyua.mongodb.net/starparty?retryWrites=true&w=majority', {
-    useNewUrlParser: true,
-	useUnifiedTopology: true,
-	useFindAndModify: false,
-	useCreateIndex: true
-});
-*/
-/*
-mongoose.connect('mongodb+srv://starparty:quGlVqvlyHjYoyLV@cluster0.ys6rk.mongodb.net/starparty?retryWrites=true&w=majority', {
-    useNewUrlParser: true,
-	useUnifiedTopology: true,
-	useFindAndModify: false,
-	useCreateIndex: true
-});
-*/
 
 mongoose.connect('mongodb+srv://starparty:quGlVqvlyHjYoyLV@cluster0.4ixac.mongodb.net/starparty?retryWrites=true&w=majority', {
     useNewUrlParser: true,
