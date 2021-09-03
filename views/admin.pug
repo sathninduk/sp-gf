@@ -8,7 +8,6 @@ block content
   div(class="container" style="margin: 50px 0px;")
     div(class="row") 
 
-      if user.username != "academic"
         div(class="col-sm-4")
           div(class="card-body") Admin Section - 1
             br
@@ -32,7 +31,7 @@ block content
             br
             br
             a(class="btn btn-primary" href="/admin/rounds" target="_self") Proceed
-      if user.username != "academic"
+
         div(class="col-sm-4")
           div(class="card-body") Admin Section - 4
             br
@@ -40,7 +39,7 @@ block content
             br
             br
             a(class="btn btn-primary" href="/admin/online" target="_self") Proceed
-      if user.username == "sathnindu"
+
         div(class="col-sm-4")
           div(class="card-body") Admin Section - 5
             br
