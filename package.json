@@ -15,7 +15,7 @@
     "express": "^4.17.1",
     "express-messages": "*",
     "express-session": "^1.13.0",
-    "express-validator": "^3.0.0",
+    "express-validator": "^3.2.1",
     "ipaddr.js": "^2.0.1",
     "mongodb": "^4.1.0",
     "mongoose": "*",
